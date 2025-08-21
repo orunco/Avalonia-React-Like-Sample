@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using avalonia_todo.Models;
 using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Interactivity;
 using DynamicData;
 using DynamicData.Binding;
@@ -16,13 +17,23 @@ namespace avalonia_todo.Components;
 而是尽量往React的Component实现方式对齐，
 axaml只用来写样式，不写结构；
 本文件就一个文件，类似React的Component, 实现结构+逻辑，简单实用，易于理解
+
+## 概念辨析
+这个组件既包含UI（UI的构造）又包含逻辑（响应）（类似 React 组件）
+转换成Avalonia的世界就是既是 View（UI）又是 Controller（逻辑）
+
+## 测试
+Footer 是一个 UserControl，本身就是一个可视元素，UT测试可以独立进行
+它有自己的可视化树，可以独立存在，不需要挂到Window上
+即使没有 Window，控件的事件系统仍然工作
  */
 public partial class Footer : XUserControl{
-    // 必须对外暴露控件，方便UI的UT/ST测试
-    public CheckBox CheckBox{ get; }
-    public Label CheckBoxLabel{ get; }
-    public Button ClearButton{ get; }
-    public TextBlock StatusTextBlock{ get; }
+    
+    // 必须对外暴露控件，方便UI的UT/ST测试，否则反射找，也找不到控件
+    public readonly CheckBox CheckBox;
+    public readonly Label CheckBoxLabel;
+    public readonly Button ClearButton;
+    public readonly TextBlock StatusTextBlock;
 
     /*
     构造函数直接传入props
@@ -45,7 +56,7 @@ public partial class Footer : XUserControl{
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 5, 0)
         };
-
+        
         CheckBoxLabel = new Label{
             Content = CheckBox,
             VerticalAlignment = VerticalAlignment.Center,
@@ -57,14 +68,14 @@ public partial class Footer : XUserControl{
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 10, 0)
         };
-
+		
         ClearButton = new Button{
             Content = "清除已完成任务",
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Right,
             Margin = new Thickness(10, 5, 0, 0)
         };
-
+		
         var panel = new StackPanel{
             Orientation = Orientation.Horizontal,
             Height = 40,

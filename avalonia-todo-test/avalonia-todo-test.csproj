@@ -10,7 +10,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AlexandreHtrb.AvaloniaUITest" Version="11.2.0.2" />
         <PackageReference Include="Avalonia" Version="11.3.4"/>
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.4" />
         <PackageReference Include="Avalonia.Desktop" Version="11.3.4"/>
         <PackageReference Include="Avalonia.Headless" Version="11.3.4" />
         <PackageReference Include="Avalonia.Headless.NUnit" Version="11.3.4" />

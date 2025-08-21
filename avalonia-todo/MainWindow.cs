@@ -11,6 +11,6 @@ public class MainWindow : Window{
         Width = 600;
         Height = 500;
  
-        Content = new AppComponent();
+        Content = new MainLayout();
     }
 }

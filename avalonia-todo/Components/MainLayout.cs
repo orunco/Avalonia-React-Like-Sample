@@ -8,34 +8,34 @@ using MsBox.Avalonia.Enums;
 
 namespace avalonia_todo.Components;
 
-public class AppComponent : UserControl{
+public class MainLayout : UserControl{
     // ==================== Props ====================
-    private readonly Todos _todos = new();
-    private readonly Header _header;
-    private readonly TodoList _todoList;
-    private readonly Footer _footer;
+    public readonly Todos _todos = new();
+    public readonly Header Header;
+    public readonly TodoList TodoList;
+    public readonly Footer Footer;
 
     // ==================== 初始化界面 ====================
-    public AppComponent(){
+    public MainLayout(){
         // 初始化 Todos 数据
         _todos.Add(new Todo(1, "吃饭", true));
         _todos.Add(new Todo(2, "睡觉", true));
         _todos.Add(new Todo(3, "写代码", false));
         _todos.Add(new Todo(4, "逛街", true));
-
+        
         // 初始化组件
-        _header = new Header();
-        _todoList = new TodoList(_todos);
-        _footer = new Footer(_todos,AllDoneCallBack,RemoveAllDoneCallBack);
+        Header = new Header();
+        TodoList = new TodoList(_todos);
+        Footer = new Footer(_todos,AllDoneCallBack,RemoveAllDoneCallBack);
         
         // 主容器
         var mainPanel = new StackPanel{
             Margin = new Thickness(10)
         };
 
-        mainPanel.Children.Add(_header);
-        mainPanel.Children.Add(_todoList);
-        mainPanel.Children.Add(_footer);
+        mainPanel.Children.Add(Header);
+        mainPanel.Children.Add(TodoList);
+        mainPanel.Children.Add(Footer);
 
         Content = mainPanel;
 
@@ -44,9 +44,9 @@ public class AppComponent : UserControl{
     }
 
     private void SetupEventHandlers(){
-        _header.OnEnter = HandleAddNewTodo;
-        _todoList.ChangeDoneFlagCallBack = ChangeDoneFlagCallBack;
-        _todoList.HandleDeleteCallBack = HandleDeleteCallBack; 
+        Header.OnEnter = HandleAddNewTodo;
+        TodoList.ChangeDoneFlagCallBack = ChangeDoneFlagCallBack;
+        TodoList.HandleDeleteCallBack = HandleDeleteCallBack; 
     }
 
     // ==================== 事件处理方法 ====================

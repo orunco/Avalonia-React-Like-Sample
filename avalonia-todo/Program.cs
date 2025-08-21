@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using Avalonia.ReactiveUI;
 
 namespace avalonia_todo;
 
@@ -17,5 +18,6 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace();
-}
+            .LogToTrace()
+            .UseReactiveUI(); // 提供更好的ReactiveUI调度器支持
+} 

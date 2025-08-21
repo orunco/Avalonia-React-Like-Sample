@@ -1,17 +1,9 @@
-﻿using System;
-using System.Linq;
-using Avalonia.Controls;
-using Avalonia.Controls.Samples;
-using Avalonia.Headless;
-using Avalonia.Headless.NUnit;
-using Avalonia.Input;
-using Avalonia.Threading;
-using Avalonia.VisualTree;
+﻿using Avalonia.Headless.NUnit;
 using NUnit.Framework;
 
-namespace Avalonia.Controls.Samples;
+namespace avalonia_todo;
 
-public class UT_Headless_Demo{
+public class ST_Headless_Demo{
     
     [SetUp]
     public void Setup(){
@@ -33,5 +25,4 @@ public class UT_Headless_Demo{
 
         // window.Close();
     }
- 
 }

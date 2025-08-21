@@ -72,6 +72,10 @@ export default TodoItem;
  */
 
 public class TodoItem : UserControl{
+    // 必须对外暴露控件，方便UI的UT/ST测试，否则反射找，也找不到控件
+    private CheckBox CheckBoxw;
+
+
     // 采用类似react props的数据传递和事件回调方式
     private readonly Todo _todo;
     public event EventHandler<(int id, bool done)>? ChangeDoneFlagCallBack;
@@ -94,13 +98,13 @@ public class TodoItem : UserControl{
             VerticalAlignment = VerticalAlignment.Center
         };
 
-        var _checkBox = new CheckBox{
+        CheckBoxw = new CheckBox{
             VerticalAlignment = VerticalAlignment.Center
         };
-        _checkBox.Bind(
+        CheckBoxw.Bind(
             ToggleButton.IsCheckedProperty,
             new Binding(nameof(Todo.Done))); // 绑定 Done 属性
-        _checkBox.Click += HandleCheck;
+        CheckBoxw.Click += HandleCheck;
 
         var _textBlock = new TextBlock{
             Margin = new Thickness(5, 0),
@@ -116,7 +120,7 @@ public class TodoItem : UserControl{
         };
         deleteButton.Click += HandleDelete;
 
-        panel.Children.Add(_checkBox);
+        panel.Children.Add(CheckBoxw);
         panel.Children.Add(_textBlock);
         panel.Children.Add(deleteButton);
 

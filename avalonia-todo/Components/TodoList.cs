@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using avalonia_todo.Models;
 using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Controls.Templates;
 
 namespace avalonia_todo.Components;
@@ -81,7 +82,7 @@ public class TodoList : UserControl{
                 return item;
             })
         };
-
+		
         Content = _itemsControl;
     }
 }

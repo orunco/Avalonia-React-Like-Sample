@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
@@ -7,24 +8,28 @@ using Avalonia.Layout;
 namespace avalonia_todo.Components;
 
 public class Header : UserControl{
+    
+    // 必须对外暴露控件，方便UI的UT/ST测试，否则反射找，也找不到控件
+    public readonly TextBox InputBox;
+    
     // 类似 React 的 props 回调
     public Action<string>? OnEnter{ get; set; }
 
     public Header(){
-        TextBox _inputBox = new TextBox{
+          InputBox = new TextBox{
             Width = 560,
             Height = 28,
             FontSize = 14,
             Padding = new Thickness(4, 7),
             Watermark = "请输入你的任务名称，按回车键确认"
         };
-
-        _inputBox.KeyUp += OnInputKeyUp;
+		
+        InputBox.KeyUp += OnInputKeyUp;
 
         var container = new StackPanel{
             Orientation = Orientation.Horizontal,
             HorizontalAlignment = HorizontalAlignment.Center,
-            Children ={ _inputBox }
+            Children ={ InputBox }
         };
 
         Content = container;

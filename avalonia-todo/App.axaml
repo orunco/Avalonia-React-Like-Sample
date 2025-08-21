@@ -8,5 +8,6 @@
     <Application.Styles>
         <!-- <FluentTheme /> -->
         <semi:SemiTheme Locale="zh-CN" />
+      
     </Application.Styles>
 </Application>
