@@ -1,12 +1,7 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using DynamicData.Binding;
 
 namespace avalonia_todo.Models;
 
-public class Todos : ObservableCollection<Todo>{
-    public Todos() : base(){
-    }
-
-    public Todos(IEnumerable<Todo> collection) : base(collection){
-    }
+// ReactiveUI提供集合支持
+public class Todos : ObservableCollectionExtended<Todo>{
 }
