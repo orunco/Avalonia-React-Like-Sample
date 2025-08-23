@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using Avalonia.Controls;
@@ -7,6 +8,8 @@ using avalonia_todo.Models;
 using Avalonia;
 using Avalonia.Automation;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Styling;
 using DynamicData;
 using DynamicData.Binding;
 
@@ -28,7 +31,6 @@ Footer 是一个 UserControl，本身就是一个可视元素，UT测试可以�
 即使没有 Window，控件的事件系统仍然工作
  */
 public partial class Footer : XUserControl{
-    
     // 必须对外暴露控件，方便UI的UT/ST测试，否则反射找，也找不到控件
     public readonly CheckBox CheckBox;
     public readonly Label CheckBoxLabel;
@@ -50,13 +52,58 @@ public partial class Footer : XUserControl{
         // 0. 必须调用，加载样式
         InitializeComponent();
 
+        /*
+        如有必要，提前获取资源
+        原来的写法：<Panel Background="{DynamicResource BackgroundColor}">
+        这个是App全局的，转换成控件级别的在Footer.axaml中
+         */
+        // 控件级+notheme
+        var thisBackgroundColorNoTheme = this.FindResource("BackgroundColorNoTheme") as IBrush ?? Brushes.Transparent;
+        // Debug.Assert(!Equals(thisBackgroundColorNoTheme , Brushes.Transparent), "BackgroundColorNoTheme resource not found or is transparent");
+
+        // 本控件没有，也不会找上一级
+        var thisNoUpToAppBackgroundColorNoTheme =
+            this.FindResource("NoUpToAppBackgroundColorNoTheme") as IBrush ?? Brushes.Transparent;
+        Debug.Assert(Equals(thisNoUpToAppBackgroundColorNoTheme, Brushes.Transparent),
+            "thisNoUpToAppBackgroundColorNoTheme resource not found or is transparent");
+
+        // 控件级+theme
+        IBrush? thisBackgroundColorTheme = Brushes.Transparent;
+        var theme = Application.Current?.ActualThemeVariant ?? ThemeVariant.Light;
+        if (TryGetResource("BackgroundColorTheme", theme, out var colorResource) && colorResource is Color color){
+            thisBackgroundColorTheme = new SolidColorBrush(color);
+            Debug.Assert(!Equals(thisBackgroundColorTheme, Brushes.Transparent),
+                "thisBackgroundColorTheme successfully created from color");
+        }
+
+        // theme
+        IBrush? thisBackgroundColorTheme2 = Brushes.Transparent;
+        if (TryGetResource("BackgroundColorTheme2", theme, out var colorResource2) &&
+            colorResource2 is SolidColorBrush color2){
+            thisBackgroundColorTheme2 = color2;
+            Debug.Assert(!Equals(thisBackgroundColorTheme2, Brushes.Transparent),
+                "BackgroundColorTheme2 successfully created from color");
+        }
+
+        // 直接引用全局
+        var resAppBackgroundColorLight = Application.Current?.FindResource("AppBackgroundColorLight");
+        Color AppBackgroundColorLight = resAppBackgroundColorLight is Color colorLight
+            ? colorLight
+            : Colors.Transparent;
+        Debug.Assert(!Equals(AppBackgroundColorLight, Colors.Transparent),
+            "AppBackgroundColorLight successfully created from color");
+
+        // 最后：类似react的theme
+        var themeScope = new ThemeVariantScope();
+        themeScope.RequestedThemeVariant = ThemeVariant.Light;
+
         // 1. 构造界面，这里是一次性的，和React Render每次都刷新不太一样
         // 略微繁琐，可以接受，目前也是AI自动生成，这里只需要处理结构，不需要处理样式
         CheckBox = new CheckBox{
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 5, 0)
         };
-        
+
         CheckBoxLabel = new Label{
             Content = CheckBox,
             VerticalAlignment = VerticalAlignment.Center,
@@ -68,14 +115,14 @@ public partial class Footer : XUserControl{
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 10, 0)
         };
-		
+
         ClearButton = new Button{
             Content = "清除已完成任务",
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Right,
             Margin = new Thickness(10, 5, 0, 0)
         };
-		
+
         var panel = new StackPanel{
             Orientation = Orientation.Horizontal,
             Height = 40,

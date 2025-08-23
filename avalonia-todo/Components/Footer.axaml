@@ -2,6 +2,26 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="avalonia_todo.Components.Footer">
+    <UserControl.Resources>
+        <!-- 第一种：没有theme，属于简单情况 -->
+        <!-- <SolidColorBrush x:Key="BackgroundColorNoTheme" Color="#FF0000" /> -->
+        
+        <!-- 第二种：带theme -->
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <!-- 直接定义 -->
+                    <Color x:Key="BackgroundColorTheme">#FF00FF</Color>
+                    <!-- 类似scss，引用全局变量，应该是比较好的方式 -->
+                    <SolidColorBrush x:Key="BackgroundColorTheme2" Color="{DynamicResource AppBackgroundColorLight}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="BackgroundColorTheme">#101010</Color> 
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <UserControl.Styles>
         <Style Selector="Button">
             <Setter Property="Foreground" Value="DarkRed" />
