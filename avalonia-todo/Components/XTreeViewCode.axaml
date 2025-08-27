@@ -1,0 +1,46 @@
+<!-- 这个文件只用来设置样式，类似React的styled-components -->
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="avalonia_todo.Components.XTreeViewCode">
+    <UserControl.Styles>
+        <!-- 正确方式：通过 TreeViewItem 的 pointerover 设置模板内 Border 背景 -->
+        <Style Selector="TreeViewItem:pointerover /template/ Border#PART_LayoutRoot:pointerover">
+            <Setter Property="Background" Value="{DynamicResource TreeViewItemPointeroverBackground}" />
+        </Style>
+
+        <!-- pressed 状态 -->
+        <Style Selector="TreeViewItem:pressed /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource TreeViewItemPressedBackground}" />
+        </Style>
+
+        <!-- selected 状态 -->
+        <Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource TreeViewItemSelectedBackground}" />
+        </Style>
+
+        <!-- disabled 状态 -->
+        <Style Selector="TreeViewItem:disabled /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource TreeViewItemDisabledBackground}" />
+        </Style>
+
+        <Style Selector="TreeViewItem:disabled /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource TreeViewItemDisabledForeground}" />
+        </Style>
+
+        <!-- disabled selected 状态 -->
+        <Style Selector="TreeViewItem:disabled:selected /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource TreeViewItemSelectedDisabledBackground}" />
+        </Style>
+    </UserControl.Styles>
+
+    <UserControl.Resources>
+        <Thickness x:Key="TreeViewItemIndent">0</Thickness>
+        <SolidColorBrush x:Key="TreeViewItemPointeroverBackground" Color="AliceBlue" />
+        <SolidColorBrush x:Key="TreeViewItemPressedBackground" Color="LightBlue" />
+        <SolidColorBrush x:Key="TreeViewItemDisabledBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="TreeViewItemDisabledForeground" Color="Gray" />
+        <SolidColorBrush x:Key="TreeViewItemSelectedBackground" Color="LightBlue" />
+        <SolidColorBrush x:Key="TreeViewItemSelectedForeground" Color="Black" />
+        <SolidColorBrush x:Key="TreeViewItemSelectedDisabledBackground" Color="LightGray" />
+    </UserControl.Resources>
+</UserControl>
