@@ -32,4 +32,12 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+    <!-- 添加自定义目标，目标文件名只能是不带版本号的 -->
+    <Target Name="CopyCustomAvaloniaDiagnostics" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+        <Copy SourceFiles="lib\Avalonia.Diagnostics-11.3.4-orunco-release.dll"
+              DestinationFiles="$(OutputPath)Avalonia.Diagnostics.dll"
+              SkipUnchangedFiles="true" />
+    </Target>
+    
 </Project>

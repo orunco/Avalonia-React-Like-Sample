@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using avalonia_todo.Components;
+using Avalonia;
 
 namespace avalonia_todo;
 
@@ -10,7 +11,8 @@ public class MainWindow : Window{
         Title = "Avalonia Todo App";
         Width = 600;
         Height = 500;
- 
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
         Content = new MainLayout();
+        this.AttachDevTools();
     }
 }
