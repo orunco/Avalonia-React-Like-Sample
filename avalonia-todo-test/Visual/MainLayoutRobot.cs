@@ -3,7 +3,7 @@ using AlexandreHtrb.AvaloniaUITest;
 using avalonia_todo.Components;
 using Avalonia.Controls;
 
-namespace avalonia_todo.VisualTests;
+namespace avalonia_todo_test.Visual;
 
 public sealed class MainLayoutRobot(Control rootView) : BaseRobot(rootView)
 {
