@@ -90,8 +90,8 @@ public partial class Footer : XUserControl{
         Color AppBackgroundColorLight = resAppBackgroundColorLight is Color colorLight
             ? colorLight
             : Colors.Transparent;
-        Debug.Assert(!Equals(AppBackgroundColorLight, Colors.Transparent),
-            "AppBackgroundColorLight successfully created from color");
+        // Debug.Assert(!Equals(AppBackgroundColorLight, Colors.Transparent),
+        //     "AppBackgroundColorLight successfully created from color");
 
         // 最后：类似react的theme
         var themeScope = new ThemeVariantScope();

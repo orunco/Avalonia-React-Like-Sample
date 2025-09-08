@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AlexandreHtrb.AvaloniaUITest;
+using avalonia_todo_test.Visual;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -42,7 +43,7 @@ public partial class App : Application{
         UITestsPrepareWindowViewModel vm = new(
             defaultActionWaitingTimeInMs: 2000,
             uiTests:[
-                new MyApp.UITesting.Tests.ST_Visual_MainWindow()
+                new Visual_MainWindow()
                 // 添加更多测试类
             ],
             uiTestsFinishedCallback: Console.WriteLine);

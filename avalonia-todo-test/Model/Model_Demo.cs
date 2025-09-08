@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-namespace avalonia_todo_test;
+namespace avalonia_todo_test.Model;
 
 [TestFixture]
-public class UT_DataModel_Demo{
+public class Model_Demo{
     [Test]
     public void Demo(){
         // 使用Nunit 4语法，Assert.That(x, Is.Equal())这种，务必注意

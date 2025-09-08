@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AlexandreHtrb.AvaloniaUITest;
-using avalonia_todo_test.Extensions;
-using avalonia_todo;
-using avalonia_todo.VisualTests;
+using AlexandreHtrb.AvaloniaUITest; 
+using avalonia_todo; 
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace MyApp.UITesting.Tests;
+namespace avalonia_todo_test.Visual;
 
-public sealed class ST_Visual_MainWindow : UITest{
+public sealed class Visual_MainWindow : UITest{
     private MainLayoutRobot mainLayoutRobot{ get; set; }
 
-    private MainWindow GetMainWindow(){
+    private avalonia_todo.MainWindow GetMainWindow(){
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop){
-            return desktop.MainWindow as MainWindow;
+            return desktop.MainWindow as avalonia_todo.MainWindow;
         }
 
         return null;

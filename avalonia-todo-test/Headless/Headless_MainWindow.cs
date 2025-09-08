@@ -1,15 +1,18 @@
 ﻿using System.Linq;
+using System.Reflection;
+using avalonia_todo;
+using avalonia_todo.Components;
+using avalonia_todo.Models;
 using Avalonia.Controls;
 using Avalonia.Headless.NUnit;
 using Avalonia.Input;
 using Avalonia.Threading;
-using avalonia_todo.Components;
 using Avalonia.VisualTree;
 using NUnit.Framework;
 
-namespace avalonia_todo;
+namespace avalonia_todo_test.UT.Headless;
 
-public class ST_Headless_MainWindow{
+public class Headless_MainWindow{
     [AvaloniaTest]
     public void Test_MainWindow_Loads_And_Contains_AppComponent(){
         // Arrange
@@ -35,13 +38,13 @@ public class ST_Headless_MainWindow{
 
         // 通过反射获取 AppComponent 中的 _todos 字段来直接验证数据
         var todosField = typeof(MainLayout).GetField("_todos",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            BindingFlags.Public | BindingFlags.Instance);
         Assert.That(todosField, Is.Not.Null);
 
-        var todos = todosField.GetValue(appComponent) as avalonia_todo.Models.Todos;
+        var todos = todosField.GetValue(appComponent) as Todos;
         Assert.That(todos, Is.Not.Null);
 
-        int initialCount = todos.Count;
+        var initialCount = todos.Count;
 
         var header = appComponent.GetVisualDescendants().OfType<Header>().FirstOrDefault();
         Assert.That(header, Is.Not.Null);

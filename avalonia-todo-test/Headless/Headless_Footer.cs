@@ -1,46 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using avalonia_todo.Components;
+using avalonia_todo.Models;
 using Avalonia.Controls;
 using Avalonia.Headless.NUnit;
-using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Threading;
 using NUnit.Framework;
-using avalonia_todo.Components;
-using avalonia_todo.Models;
-using Avalonia.Interactivity;
 
 namespace avalonia_todo_test.UT.Headless;
 
-public class UT_Headless_Footer
-{
-    private Todos _todos = null!;
+public class Headless_Footer{
     private bool _allDoneCallbackInvoked;
-    private bool _removeAllDoneCallbackInvoked;
     private Footer _footer = null!;
+    private bool _removeAllDoneCallbackInvoked;
+    private Todos _todos = null!;
 
     [SetUp]
-    public void Setup()
-    {
+    public void Setup(){
         _todos = new Todos();
         _allDoneCallbackInvoked = false;
         _removeAllDoneCallbackInvoked = false;
 
         _footer = new Footer(
             _todos,
-            flag =>
-            {
-                _allDoneCallbackInvoked = true;
-            },
-            () =>
-            {
-                _removeAllDoneCallbackInvoked = true;
-            });
+            flag => { _allDoneCallbackInvoked = true; },
+            () => { _removeAllDoneCallbackInvoked = true; });
     }
 
     [AvaloniaTest]
-    public void Footer_Controls_Should_Be_Initialized()
-    {
+    public void Footer_Controls_Should_Be_Initialized(){
         // Assert
         Assert.That(_footer.CheckBox, Is.Not.Null);
         Assert.That(_footer.CheckBoxLabel, Is.Not.Null);
@@ -49,10 +36,9 @@ public class UT_Headless_Footer
     }
 
     [AvaloniaTest]
-    public void StatusTextBlock_Should_Update_When_Todos_Change()
-    {
+    public void StatusTextBlock_Should_Update_When_Todos_Change(){
         // Arrange
-        _todos.Add(new Todo(1, "Test 1", false));
+        _todos.Add(new Todo(1, "Test 1"));
         _todos.Add(new Todo(2, "Test 2", true));
 
         // Act
@@ -63,8 +49,7 @@ public class UT_Headless_Footer
     }
 
     [AvaloniaTest]
-    public void CheckBox_Should_Be_Checked_When_All_Todos_Are_Done()
-    {
+    public void CheckBox_Should_Be_Checked_When_All_Todos_Are_Done(){
         // Arrange
         _todos.Add(new Todo(1, "Test 1", true));
         _todos.Add(new Todo(2, "Test 2", true));
@@ -77,11 +62,10 @@ public class UT_Headless_Footer
     }
 
     [AvaloniaTest]
-    public void CheckBox_Should_Be_Unchecked_If_Not_All_Todos_Are_Done()
-    {
+    public void CheckBox_Should_Be_Unchecked_If_Not_All_Todos_Are_Done(){
         // Arrange
         _todos.Add(new Todo(1, "Test 1", true));
-        _todos.Add(new Todo(2, "Test 2", false));
+        _todos.Add(new Todo(2, "Test 2"));
 
         // Act
         Dispatcher.UIThread.RunJobs();
@@ -91,8 +75,7 @@ public class UT_Headless_Footer
     }
 
     [AvaloniaTest]
-    public void Clicking_CheckBox_Should_Invoke_AllDone_Callback()
-    {
+    public void Clicking_CheckBox_Should_Invoke_AllDone_Callback(){
         // Arrange
         _todos.Add(new Todo(1, "Test 1", true));
 
@@ -104,8 +87,7 @@ public class UT_Headless_Footer
     }
 
     [AvaloniaTest]
-    public void Clicking_ClearButton_Should_Invoke_RemoveAllDone_Callback()
-    {
+    public void Clicking_ClearButton_Should_Invoke_RemoveAllDone_Callback(){
         // Act
         _footer.ClearButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
