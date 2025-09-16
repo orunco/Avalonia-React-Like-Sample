@@ -33,7 +33,7 @@ public class Headless_Demo{
     }
 
     // key3
-    public static void RunLoop(int maxWaitMs = 3000){
+    public static void WaitFor(int maxWaitMs = 3000){
         // 测试环境中，后台线程启动和Dispatcher任务执行需要时间，
         // 而测试方法很快就结束了，没有给这些异步操作执行的机会。
         // 实际测试，如此设置可确保队列强制完成任务
@@ -62,7 +62,7 @@ public class Headless_Demo{
         TestContext.WriteLine($"==Enter Test1: app is {Application.Current?.GetHashCode()}");
 
         LoaderControl.SetSource(new Image(), "test1");
-        RunLoop();
+        WaitFor();
 
         TestContext.WriteLine("==Level Test1");
     }
@@ -76,7 +76,7 @@ public class Headless_Demo{
         TestContext.WriteLine($"==Enter Test2: app is {Application.Current?.GetHashCode()}");
 
         LoaderControl.SetSource(new Image(), "test2");
-        RunLoop();
+        WaitFor();
 
         TestContext.WriteLine("==Level Test2");
     }
